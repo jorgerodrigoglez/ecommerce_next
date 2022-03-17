@@ -1,0 +1,29 @@
+// npm i sass
+@import './index.scss';
+
+.field{
+    text-align: center;
+    margin-bottom: .25rem;
+}
+
+// estilos globales de formularios de login y registro
+.ui.input{
+    width: 95%;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+       
+    input{
+        border: solid 1px $border-grey-light;
+        font-size: 16px;
+    }
+}
+.actions{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.ui.button.submit{
+    background-color: $primary-color;
+    color: $font-light;
+    margin: 0;
+}
