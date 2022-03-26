@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 // para componentes de react para generar estilos
 // npm install semantic-ui-react semantic-ui-css
 import { Container, Grid, Menu, Icon, Label } from "semantic-ui-react";
@@ -8,12 +8,29 @@ import Link from "next/link";
 import BasicModal from "../../Modal/BasicModal";
 // Login del formulario
 import Auth from "../../Auth/Auth";
+// estado global de la app para el logout
+import useAuth from "../../../hooks/useAuth";
+//para rutas protegidas - autenticadas - al servidor
+import { getMeApi } from "../../../api/users";
 
 export default function MainMenu() {
   // mostrar u ocultar el modal
   const [showModal, setShowModal] = useState(false);
   // cambiar el title de la ventana modal
   const [titleModal, setTitleModal] = useState("Iniciar sesión");
+  // Estado para rutas protegidas al servidor de getMeApi
+  const [user, setUser] = useState(undefined);
+  // useAuth/hooks de objeto authData de _app.js
+  const { auth, logout } = useAuth();
+
+  // funcion autoejecutable para peticiones protegidas al servidor
+  useEffect(() => {
+    (async () => {
+      const response = await getMeApi(logout);
+      setUser(response);
+      //console.log(response);
+    })();
+  }, [auth]);
 
   const onShowModal = () => setShowModal(true);
   // para el componente de Auth
@@ -27,7 +44,19 @@ export default function MainMenu() {
             <MenuItems />
           </Grid.Column>
           <Grid.Column className="menu__right" width={10}>
-            <MenuOptions onShowModal={onShowModal} />
+            {/*auth ? (
+              <button onClick={logout}>Cerrar sesión</button>
+            ) : (
+              <MenuOptions onShowModal={onShowModal} />
+            )*/}
+            {/* Cuando se haya autoejecutado el useEffect de peticiones protegidas */}
+            {user !== undefined && (
+              <MenuOptions
+                onShowModal={onShowModal}
+                user={user}
+                logout={logout}
+              />
+            )}
           </Grid.Column>
         </Grid>
       </Container>
@@ -61,14 +90,45 @@ function MenuItems() {
 }
 
 function MenuOptions(props) {
-  const { onShowModal } = props;
+  const { onShowModal, user, logout } = props;
 
   return (
     <Menu>
-      <Menu.Item onClick={onShowModal}>
-        <Icon name="user outline" />
-        Mi cuenta
-      </Menu.Item>
+      {user ? (
+        <>
+          <Link href="/orders">
+            <Menu.Item as="a">
+              <Icon name="game" />
+              Mis pedidos
+            </Menu.Item>
+          </Link>
+          <Link href="/wishlist">
+            <Menu.Item as="a">
+              <Icon name="heart outline" />
+              Mis favoritos
+            </Menu.Item>
+          </Link>
+          <Link href="/account">
+            <Menu.Item as="a">
+              <Icon name="user outline" />
+              {user.name}{user.lastname}
+            </Menu.Item>
+          </Link>
+          <Link href="/cart">
+            <Menu.Item as="a" className="m-0">
+              <Icon name="cart" />
+            </Menu.Item>
+          </Link>
+          <Menu.Item onClick={logout} className="m-0">
+            <Icon name="power off"/>
+          </Menu.Item>
+        </>
+      ) : (
+        <Menu.Item onClick={onShowModal}>
+          <Icon name="user outline" />
+          Mi cuenta
+        </Menu.Item>
+      )}
     </Menu>
   );
 }

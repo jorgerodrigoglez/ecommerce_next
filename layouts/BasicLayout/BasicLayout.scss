@@ -7,11 +7,12 @@
     background-position-y: 200px;
 
     .content{
-        padding: 1rem;
+        margin-top: 1rem;
+        padding: 1.5rem;
         background-color: $bg-grey-light;
         height: calc(100vh - 130px);
-        opacity: .9;
-        box-shadow: 0px 0px 10px 0px rgba(0,0,0,.75);
+        opacity: .95;
+        box-shadow: 0px 0px 2px 0px rgba(0,0,0,.75);
         overflow-y: scroll;
 
         &::-webkit-scrollbar{
