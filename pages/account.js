@@ -6,11 +6,15 @@ import BasicLayout from "../layouts/BasicLayout";
 import useAuth from "../hooks/useAuth";
 //para rutas protegidas - autenticadas - al servidor
 import { getMeApi } from "../api/users";
+// formulario de usuario
+import ChangeNameForm from "../components/Account/ChangeNameForm";
+import ChangeEmailForm from "../components/Account/ChangeEmailForm";
+import ChangePasswordForm from "../components/Account/ChangePasswordForm/ChangePasswordForm";
 
 export default function account() {
   const [user, setUser] = useState(undefined);
   // hook
-  const { auth, logout} = useAuth();
+  const { auth, logout, setReloadUser } = useAuth();
   // router
   const router = useRouter();
 
@@ -24,29 +28,43 @@ export default function account() {
   }, [auth]);
 
   // si es undefined el usuario no ha sido logeado todavía
-  if(user === undefined ) return null;
+  if (user === undefined) return null;
   // si el usuario no esta logeado y el usuario no existe
-  if(!auth && !user){
-      router.replace("/");
-      return null;
+  if (!auth && !user) {
+    router.replace("/");
+    return null;
   }
 
   return (
     <BasicLayout className="account">
-      <Configuration/>
-    
+      <Configuration
+        user={user}
+        logout={logout}
+        setReloadUser={setReloadUser}
+      />
     </BasicLayout>
   );
 }
 
 function Configuration(props) {
-    //const { user, logout, setReloadUser } = props;
-  
-    return (
-      <div className="account__configuration">
-        <div className="title">Configuración</div>
-        <div className="data">Formulario de configuración</div>
-      </div>
-    );
-  }
+  const { user, logout, setReloadUser } = props;
 
+  return (
+    <div className="account__configuration">
+      <div className="title">Configuración</div>
+      <div className="data">
+        <ChangeNameForm
+          user={user}
+          logout={logout}
+          setReloadUser={setReloadUser}
+        />
+      </div>
+      <ChangeEmailForm
+        user={user}
+        logout={logout}
+        setReloadUser={setReloadUser}
+      />
+      <ChangePasswordForm user={user} logout={logout} />
+    </div>
+  );
+}
