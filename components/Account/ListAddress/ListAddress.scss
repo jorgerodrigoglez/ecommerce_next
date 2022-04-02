@@ -1,0 +1,32 @@
+.list-address{
+    padding: .5rem;
+    background-color: $bg-light;
+
+    .address{
+        padding: .5rem;
+        margin: .5rem 0 .5rem 0;
+        border: solid 2px $bg-dark;
+        border-radius: 5px;
+
+        p{ 
+            margin-bottom: .15rem;
+
+            &:first-of-type{
+                font-weight: bold;
+                border-bottom: solid 1px $bg-dark;
+                margin-bottom: .5rem;
+                font-size: 1rem;
+            }
+
+        }
+
+        .actions{
+            margin-top: 1rem;
+
+            .ui.button.primary{
+                background-color: $primary-color;
+                color: $font-dark;
+            }
+        }
+    }
+}

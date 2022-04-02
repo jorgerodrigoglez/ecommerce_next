@@ -10,6 +10,12 @@ import { getMeApi } from "../api/users";
 import ChangeNameForm from "../components/Account/ChangeNameForm";
 import ChangeEmailForm from "../components/Account/ChangeEmailForm";
 import ChangePasswordForm from "../components/Account/ChangePasswordForm/ChangePasswordForm";
+// modal para crear direcciones
+import BasicModal from "../components/Modal/BasicModal";
+// formulario para direcciones incluido en el modal
+import AddressForm from "../components/Account/AddressForm";
+// listar lista de direcciones creadas en strapi
+import ListAddress from "../components/Account/ListAddress";
 
 export default function account() {
   const [user, setUser] = useState(undefined);
@@ -42,10 +48,12 @@ export default function account() {
         logout={logout}
         setReloadUser={setReloadUser}
       />
+      <Addresses />
     </BasicLayout>
   );
 }
 
+// componente de formulario para editar datos de usuario
 function Configuration(props) {
   const { user, logout, setReloadUser } = props;
 
@@ -65,6 +73,51 @@ function Configuration(props) {
         setReloadUser={setReloadUser}
       />
       <ChangePasswordForm user={user} logout={logout} />
+    </div>
+  );
+}
+// componente para creación y edición de direcciones de envío
+function Addresses() {
+  const [showModal, setShowModal] = useState(false);
+  const [titleModal, setTitleModal] = useState("");
+  const [formModal, setFormModal] = useState(null);
+  // estado para recargar los datos de direcciones en ListAddress sin tener que recargar el navegador
+  const [realoadAddresses, setRealoadAddresses] = useState(false);
+
+  const openModal = (title, address) => {
+    setTitleModal(title);
+    setFormModal(
+      <AddressForm
+        setShowModal={setShowModal}
+        setRealoadAddresses={setRealoadAddresses}
+        // actualización si es false = edicion
+        newAddress={ address ? false : true }
+        address={address || null}
+      />
+    );
+    setShowModal(true);
+  };
+
+  return (
+    <div className="account__addresses">
+      <div className="title">
+        Direciones
+        <Icon name="plus" link onClick={() => openModal("New direction")} />
+      </div>
+      <div className="data">
+        <ListAddress
+          realoadAddresses={realoadAddresses}
+          setRealoadAddresses={setRealoadAddresses}
+          openModal={openModal}
+        />
+      </div>
+      <BasicModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        title={titleModal}
+      >
+        {formModal}
+      </BasicModal>
     </div>
   );
 }
