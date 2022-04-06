@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 // para componentes de react para generar estilos
 // npm install semantic-ui-react semantic-ui-css
 import { Container, Grid, Menu, Icon, Label } from "semantic-ui-react";
+//lodash
+import { map } from "lodash";
 // next-link
 import Link from "next/link";
 // Basic Modal
@@ -12,6 +14,8 @@ import Auth from "../../Auth/Auth";
 import useAuth from "../../../hooks/useAuth";
 //para rutas protegidas - autenticadas - al servidor
 import { getMeApi } from "../../../api/users";
+// petición para extraer las categorias de strapi
+import { getCategoriesApi } from "../../../api/items";
 
 export default function MainMenu() {
   // mostrar u ocultar el modal
@@ -20,6 +24,9 @@ export default function MainMenu() {
   const [titleModal, setTitleModal] = useState("Iniciar sesión");
   // Estado para rutas protegidas al servidor de getMeApi
   const [user, setUser] = useState(undefined);
+  // Estado para las categorias de productos de api/products
+  const [categories, setCategories] = useState([]);
+
   // useAuth/hooks de objeto authData de _app.js
   const { auth, logout } = useAuth();
 
@@ -32,6 +39,15 @@ export default function MainMenu() {
     })();
   }, [auth]);
 
+  // función para categorias de los productos  api/products
+  useEffect(() => {
+    (async () => {
+      const response = await getCategoriesApi();
+      setCategories(response || []);
+      //console.log(response);
+    })();
+  }, []);
+
   const onShowModal = () => setShowModal(true);
   // para el componente de Auth
   const onCloseModal = () => setShowModal(false);
@@ -41,7 +57,7 @@ export default function MainMenu() {
       <Container>
         <Grid>
           <Grid.Column className="menu__left" width={6}>
-            <MenuItems />
+            <MenuItems categories={categories} />
           </Grid.Column>
           <Grid.Column className="menu__right" width={10}>
             {/*auth ? (
@@ -73,18 +89,29 @@ export default function MainMenu() {
   );
 }
 
-function MenuItems() {
+function MenuItems(props) {
+  const { categories } = props;
+
   return (
+    // <Menu>
+    //   <Link href="/sectores">
+    //     <Menu.Item as="a">Sectores</Menu.Item>
+    //   </Link>
+    //   <Link href="/servicios">
+    //     <Menu.Item as="a">Servicios</Menu.Item>
+    //   </Link>
+    //   <Link href="/municipios">
+    //     <Menu.Item as="a">Municipios</Menu.Item>
+    //   </Link>
+    // </Menu>
     <Menu>
-      <Link href="/sectores">
-        <Menu.Item as="a">Sectores</Menu.Item>
-      </Link>
-      <Link href="/servicios">
-        <Menu.Item as="a">Servicios</Menu.Item>
-      </Link>
-      <Link href="/municipios">
-        <Menu.Item as="a">Municipios</Menu.Item>
-      </Link>
+      {map(categories, categorie => (
+        <Link href={`/categories/${categorie.url}`} key={categorie._id}>
+          <Menu.Item as="a" name={categorie.url}>
+            {categorie.name}
+          </Menu.Item>
+        </Link>
+      ))}
     </Menu>
   );
 }
@@ -111,7 +138,8 @@ function MenuOptions(props) {
           <Link href="/account">
             <Menu.Item as="a">
               <Icon name="user outline" />
-              {user.name}{user.lastname}
+              {user.name}
+              {user.lastname}
             </Menu.Item>
           </Link>
           <Link href="/cart">
@@ -120,7 +148,7 @@ function MenuOptions(props) {
             </Menu.Item>
           </Link>
           <Menu.Item onClick={logout} className="m-0">
-            <Icon name="power off"/>
+            <Icon name="power off" />
           </Menu.Item>
         </>
       ) : (

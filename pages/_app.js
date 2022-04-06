@@ -12,6 +12,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //npm i jwt-decode
 import jwtDecode from "jwt-decode";
+// para crear carrusel de imagenes en las paginas de producto
+// npm install react-slick --save
+// npm install slick-carousel
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 //create context de context/AuthContext - hook: useAuth
 import AuthContext from "../context/AuthContext";
 //funciones para mantener guardada lasesion del usuario en el local storage

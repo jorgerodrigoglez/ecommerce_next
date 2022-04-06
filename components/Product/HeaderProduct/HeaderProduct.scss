@@ -1,0 +1,120 @@
+.header-product{
+    &.ui.grid{
+        margin: 0;
+    }
+
+    &__title{
+        padding: 1rem !important;
+        position: relative;
+        background-color: $bg-dark;
+        padding: .25rem 0;
+        font-size: 1.5rem;
+        color: $font-light;
+        text-align: center;
+        font-weight: bold;
+
+        i.icon{
+            position: absolute;
+            height: 100%;
+            //top: 1rem;
+            right: 1.25rem;
+            display: float;
+            align-items: center;
+            font-size: 2rem;
+            color: $bg-light;
+            opacity: 1;
+
+            &.like{
+                color: $bg-dark;
+            }
+        }
+    }
+
+    &__delivery{
+        text-align: center;
+        color: $primary-color;
+        font-weight: bold;
+        font-size: 1.25rem;
+        padding: 1rem 0;
+    }
+
+    &__summary{
+        margin-top: .5rem;
+        background-color: $bg-light;
+        padding: 1rem;
+        font-weight: bold;
+        color: $font-dark;
+        font-size: 1rem;
+        border: solid 1px $bg-dark;
+    }
+
+    &__buy{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $bg-light;
+        color: $font-dark;
+        padding: .75rem;
+        border-bottom: solid 1px;
+        margin-top: .5rem;
+
+        &-price{
+            display: flex;
+            flex-direction: column;
+
+            > p {
+                text-align: center;
+                color: $font-grey;
+                margin: 0;
+            }
+
+            &-actions{
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+
+                > p {
+                    margin: .5rem;
+                    font-weight: bold;
+
+                    &:first-of-type{
+                        font-size: 1.15rem;
+                    }
+
+                    &:last-of-type{
+                        font-size: 2rem;
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+
+        &-btn.ui.button {
+            position: relative;
+            width: 200px;
+            background-color: $primary-color;
+            color: $font-light;
+            font-size: 1.25rem;
+            padding: 1.4rem 0;
+            left: -20px;
+            transition: 0.2s;
+
+            &:hover{
+                left: -10px;
+            }
+
+            &:after{
+                content: "";
+                position: absolute;
+                top: 10px;
+                right: -15px;
+                width: 36px;
+                height: 36px;
+                border-radius: 10px 4px 10px 0;
+                transform: rotate(45deg) skew(15deg, 15deg);
+                background-color: $primary-color;
+            }
+        }
+    }
+    
+}

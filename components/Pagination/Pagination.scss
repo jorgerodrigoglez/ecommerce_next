@@ -1,0 +1,33 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+
+    .ui.pagination.menu{
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+
+        .item{
+            background-color: $bg-dark;
+            color: $font-light;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 .5rem;
+
+            &::before{
+                display: none;
+            }
+
+            &:focus{
+                outline: none;
+            }
+
+            &:active{
+                background-color: $bg-grey;
+                color: $font-light;
+            }
+        }
+    }
+}

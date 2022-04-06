@@ -50,7 +50,6 @@ export default function AddressForm(props) {
       setLoading(false);
       setShowModal(false);
     }
-
     setLoading(false);
   };
 
