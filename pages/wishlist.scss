@@ -1,0 +1,33 @@
+.wishlist{
+    &__block{
+        padding: 1rem;
+
+        .title {
+            width: max-content;
+            background-color: $bg-light;
+            color: $font-dark;
+            padding-bottom: 1rem;
+            padding-top: .5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-radius: 5px 5px 0 0;
+            border-bottom: dashed 1px $bg-dark;
+        }
+
+        .data{
+            margin-top: 1rem;
+            background-color: $bg-light;
+
+            &__not-found{
+                text-align: center;
+                padding: 1.25rem 0;
+            }
+
+            .list-game{
+                .ui.grid{
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
