@@ -18,7 +18,7 @@ import ListProducts from "../../components/ListProducts/ListProducts";
 import Pagination from "../../components/Pagination";
 
 //limite de juegos por pagina
-const limitPerPage = 10;
+const limitPerPage = 6;
 
 export default function Product() {
   //const router = useRouter();

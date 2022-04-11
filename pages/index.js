@@ -21,7 +21,7 @@ export default function Home() {
   // trae los diferentes productos de strapi a la home
   useEffect(() => {
     (async () => {
-      const response = await getLastProductsApi(10);
+      const response = await getLastProductsApi(21);
       if (size(response) > 0) setProducts(response);
       else setProducts([]);
     })();

@@ -46,6 +46,7 @@ export default function ListProducts(props) {
 // componente del producto
 function Product(props) {
   const { product } = props;
+  const { price, discount } = product;
   //console.log(product);
   return (
     <Grid.Column className="list-products__product">
@@ -55,7 +56,8 @@ function Product(props) {
           <div className="list-products__product-poster">
             <Image src={product.poster.url} alt={product.title} />
             <div className="list-products__product-poster-info">
-              <span className="price">{product.price}€</span>
+              {/* <span className="price">{product.price}€</span> */}
+              <span className="price">{(price - Math.floor(price * discount) / 100).toFixed(0)} €</span>
               {product.discount ? (
                 <span className="discount">-{product.discount}%</span>
               ) : (

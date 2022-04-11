@@ -43,3 +43,16 @@ export async function getTotalProductsApi(item){
       return null;
   }
 }
+
+//devuelve los productos de la búsqueda realizada mediante texto de la bbdd de strapi
+export async function searchProductsApi(title){
+  try {
+    const url = `${BASE_PATH}/products?_q=${title}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;   
+  } catch (error) {
+      console.log(error);
+      return null;
+  }
+}
