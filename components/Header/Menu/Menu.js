@@ -16,6 +16,8 @@ import useAuth from "../../../hooks/useAuth";
 import { getMeApi } from "../../../api/users";
 // petición para extraer las categorias de strapi
 import { getCategoriesApi } from "../../../api/items";
+// context cart; hook useCart
+import useCart from "../../../hooks/useCart";
 
 export default function MainMenu() {
   // mostrar u ocultar el modal
@@ -118,6 +120,8 @@ function MenuItems(props) {
 
 function MenuOptions(props) {
   const { onShowModal, user, logout } = props;
+  // useCart
+  const { productsCart } = useCart();
 
   return (
     <Menu>
@@ -145,6 +149,11 @@ function MenuOptions(props) {
           <Link href="/cart">
             <Menu.Item as="a" className="m-0">
               <Icon name="cart" />
+              {productsCart > 0 && (
+                <Label color="red" floating circular>
+                  {productsCart}
+                </Label>
+              )}
             </Menu.Item>
           </Link>
           <Menu.Item onClick={logout} className="m-0">

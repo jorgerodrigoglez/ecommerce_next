@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+// next/router
 import { useRouter } from "next/router";
+// layout
 import BasicLayout from "../layouts/BasicLayout";
 // trae los datos del producto
 import { getProductByUrlApi } from "../api/items";

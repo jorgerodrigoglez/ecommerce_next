@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Image, Icon, Button, GridColumn } from "semantic-ui-react";
+import { Grid, Image, Icon, Button } from "semantic-ui-react";
 import { size } from "lodash";
 import classNames from "classnames";
 import moment from "moment";
@@ -11,6 +11,8 @@ import {
   addFavoriteApi,
   deleteFavoriteApi
 } from "../../../api/favorite";
+// context cart, hook useCart
+import useCart from "../../../hooks/useCart";
 
 export default function HeaderProduct(props) {
   const { product } = props;
@@ -31,9 +33,11 @@ export default function HeaderProduct(props) {
 // componente para información del producto
 function Info(props) {
   const { product } = props;
-  const { title, summary, price, discount } = product;
-  // context hook
+  const { title, summary, price, discount, url } = product;
+  // context hook para autenticacion
   const { auth, logout } = useAuth();
+  // useContext del carrito
+  const { addProductCart } = useCart();
   // lista de favoritos
   const [isFavorite, setIsFavorite] = useState(false);
   // el useEffect se vuelve a ejecutar y refresca la página
@@ -99,7 +103,10 @@ function Info(props) {
             <p>{(price - Math.floor(price * discount) / 100).toFixed(2)}€</p>
           </div>
         </div>
-        <Button className="header-product__buy-btn">Comprar</Button>
+        <Button
+          className="header-product__buy-btn"
+          onClick={() => addProductCart(url)}
+        >Comprar...</Button>
       </div>
     </>
   );

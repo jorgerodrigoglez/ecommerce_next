@@ -1,0 +1,50 @@
+.address-shipping{
+    padding: .5rem;
+
+    .title {
+        width: max-content;
+        background-color: $bg-dark;
+        color: $font-light;
+        padding: 0.5rem 1rem;
+        border-radius: 5px 5px 0 0;
+      }
+    
+      .data {
+        background-color: $bg-light;
+        box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+        padding: 0.75rem;
+      }
+
+      .address{
+          padding: .5rem;
+          margin: .5rem 0 .5rem 0;
+          border: solid 1px $border-grey-light;
+          border-radius: 5px;
+
+          &:hover{
+              cursor: pointer;
+          }
+
+          p{
+              margin-bottom: 5px;
+
+              &:first-of-type{
+                  font-weight: bold;
+                  border-bottom: solid 1px $border-grey-light;
+                  margin-bottom: .5rem;
+                  font-size: 1.1rem;
+                  font-weight: bold;
+                  color: $primary-color;
+                  opacity: .8;
+              }
+          }
+
+          &.active {
+              border-color: $primary-color;
+              background-color: #ffe2d4;
+              p{
+                  border-color: $primary-color;
+              }
+          }
+      }
+}
