@@ -7,6 +7,7 @@ import { getProductByUrlApi } from "../api/product";
 // components
 import SummaryCart from "../components/Cart/SummaryCart";
 import AddressShipping from "../components/Cart/AddressShipping/addressShipping";
+import Payment from "../components/Cart/Payment";
 
 export default function cart() {
   const { getProductsCart } = useCart();
@@ -32,7 +33,7 @@ function FullCart(props) {
   // estado para componente de <AddressShipping/>
   // selecciona la direccion escogida por el usuario
   const [address, setAddress] = useState(null);
-  console.log(address);
+  //console.log(address);
 
   // crea un array de productos añadidos al carrito
   useEffect(() => {
@@ -55,6 +56,7 @@ function FullCart(props) {
         setReloadCart={setReloadCart}
       /> 
       <AddressShipping setAddress={setAddress}/>
+      {address && <Payment products={productsData} address={address}/>}
     </BasicLayout>
   );
 }
